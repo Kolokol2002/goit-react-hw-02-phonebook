@@ -1,12 +1,29 @@
-function Contacts({ usersArray }) {
+import {
+  ContactsUserList,
+  ContactsUser,
+  ContactsUserName,
+  ContactsButtonDelite,
+} from './Contacts.styled';
+
+function Contacts({ usersArray, onDelete }) {
   return (
-    <ul>
+    <ContactsUserList>
       {usersArray.map((user, idx) => (
-        <li key={idx}>
-          {user.name}: {user.number}
-        </li>
+        <ContactsUser key={idx}>
+          <ContactsUserName>
+            {user.name}: {user.number}
+          </ContactsUserName>
+
+          <ContactsButtonDelite
+            data-user-name={user.name}
+            onClick={onDelete}
+            type="button"
+          >
+            Delite
+          </ContactsButtonDelite>
+        </ContactsUser>
       ))}
-    </ul>
+    </ContactsUserList>
   );
 }
 

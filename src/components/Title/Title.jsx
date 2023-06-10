@@ -1,9 +1,11 @@
+import { Container, MainTitle } from './Title.styled';
+
 function Title({ title, children }) {
   return (
-    <div>
-      <h2>{title}</h2>
+    <Container>
+      <MainTitle>{title}</MainTitle>
       {children}
-    </div>
+    </Container>
   );
 }
 

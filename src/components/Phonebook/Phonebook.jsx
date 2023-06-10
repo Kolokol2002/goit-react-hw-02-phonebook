@@ -1,5 +1,7 @@
 import { Component } from 'react';
 
+import { Form, Label, Input, Button } from './Phonebook.styled';
+
 class Phonebook extends Component {
   state = { name: '', number: '' };
 
@@ -11,37 +13,37 @@ class Phonebook extends Component {
     e.preventDefault();
     const { name, number } = e.target.elements;
     this.props.getContacts({ name: name.value, number: number.value });
+    e.currentTarget.reset();
   };
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="name">
-            Name
-            <input
-              onChange={this.handleChange}
-              type="text"
-              name="name"
-              value={this.state.name}
-              id="name"
-            />
-          </label>
-          <label htmlFor="number">
-            Number
-            <input
-              id="number"
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <button type="submit">Add Contact</button>
-        </form>
-      </div>
+      <Form onSubmit={this.handleSubmit}>
+        <Label htmlFor="name">
+          Name
+          <Input
+            onChange={this.handleChange}
+            type="text"
+            name="name"
+            value={this.state.name}
+            id="name"
+            required
+          />
+        </Label>
+        <Label htmlFor="number">
+          Number
+          <Input
+            id="number"
+            type="tel"
+            name="number"
+            pattern="^(?:\+38)?(?:\(044\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[0-9]{7})$"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            onChange={this.handleChange}
+            required
+          />
+        </Label>
+        <Button type="submit">Add Contact</Button>
+      </Form>
     );
   }
 }

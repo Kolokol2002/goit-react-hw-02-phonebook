@@ -1,24 +1,32 @@
 import { Component } from 'react';
-import Phonebook from './Phonebook';
-import Contacts from './Contacts';
-import Title from './Title';
-import Filter from './Filter';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Phonebook from '../Phonebook';
+import Contacts from '../Contacts';
+import Title from '../Title';
+import Filter from '../Filter';
+import { MainContainer } from './App.styled';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
   getContacts = userData => {
-    this.setState(({ contacts }) => ({
-      contacts: [...contacts, userData],
-    }));
+    this.setState(({ contacts }) => {
+      const isEmpty = contacts.filter(
+        ({ name }) => name === userData.name
+      ).length;
+
+      if (isEmpty === 0) {
+        return { contacts: [...contacts, userData] };
+      } else {
+        toast.warn(`${userData.name}, already exist in phonebook!!!`, {
+          icon: '❗',
+        });
+      }
+    });
   };
 
   handleFilter = ({ target }) => {
@@ -35,22 +43,30 @@ class App extends Component {
     );
   };
 
+  onDelete = ({ target }) => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(item => item.name !== target.dataset.userName),
+    }));
+  };
+
   render() {
     const { contacts, filter } = this.state;
     return (
-      <>
+      <MainContainer>
         <Title title={'Phonebook'}>
           <Phonebook getContacts={this.getContacts} />
         </Title>
+
         {contacts.length !== 0 && (
           <Title title={'Contacts'}>
             <Filter handleFilter={this.handleFilter} />
             <Contacts
               usersArray={filter !== '' ? this.filterChange() : contacts}
+              onDelete={this.onDelete}
             />
           </Title>
         )}
-      </>
+      </MainContainer>
     );
   }
 }

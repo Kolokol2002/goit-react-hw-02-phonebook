@@ -1,4 +1,5 @@
 import { Container, MainTitle } from './Title.styled';
+import PropTypes from 'prop-types';
 
 function Title({ title, children }) {
   return (
@@ -8,5 +9,10 @@ function Title({ title, children }) {
     </Container>
   );
 }
+
+Title.propType = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 export default Title;

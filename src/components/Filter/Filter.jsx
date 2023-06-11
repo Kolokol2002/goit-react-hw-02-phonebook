@@ -1,4 +1,5 @@
 import { ContainerFilter, TitleFilter, InputFilter } from './Filter.styled';
+import PropTypes from 'prop-types';
 
 function Filter({ handleFilter }) {
   return (
@@ -8,5 +9,9 @@ function Filter({ handleFilter }) {
     </ContainerFilter>
   );
 }
+
+Filter.propTypes = {
+  handleFilter: PropTypes.func.isRequired,
+};
 
 export default Filter;

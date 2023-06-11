@@ -1,6 +1,7 @@
 import { Component } from 'react';
-
 import { Form, Label, Input, Button } from './Phonebook.styled';
+import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 
 class Phonebook extends Component {
   state = { name: '', number: '' };
@@ -12,7 +13,11 @@ class Phonebook extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { name, number } = e.target.elements;
-    this.props.getContacts({ name: name.value, number: number.value });
+    this.props.getContacts({
+      name: name.value,
+      number: number.value,
+      id: nanoid(),
+    });
     e.currentTarget.reset();
   };
 
@@ -36,7 +41,7 @@ class Phonebook extends Component {
             id="number"
             type="tel"
             name="number"
-            pattern="^(?:\+38)?(?:\(044\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[0-9]{7})$"
+            pattern="(\+?[0-9]{1,2}?\s?[0-9]{2}\s?[0-9]{3}\s?[0-9]{4,5}$)"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             onChange={this.handleChange}
             required
@@ -47,5 +52,9 @@ class Phonebook extends Component {
     );
   }
 }
+
+Phonebook.propTypes = {
+  getContacts: PropTypes.func.isRequired,
+};
 
 export default Phonebook;
